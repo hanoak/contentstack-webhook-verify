@@ -1,0 +1,58 @@
+{
+  "name": "contentstack-webhook-verify",
+  "version": "1.0.0",
+  "description": "contentstack-webhook-verify",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "lint:fix": "eslint --fix ./*.js",
+    "precommit": "lint-staged --concurrent false",
+    "prettify": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanoak/contentstack-webhook-verify.git"
+  },
+  "keywords": [
+    "contentstack",
+    "webhook",
+    "Node.js",
+    "Javascript",
+    "Typescript",
+    "library",
+    "helper",
+    "npm"
+  ],
+  "author": "Hanoak",
+  "files": [
+    "dist"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/hanoak/contentstack-webhook-verify/issues"
+  },
+  "homepage": "https://github.com/hanoak/contentstack-webhook-verify#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "eslint": "^9.29.0",
+    "globals": "^16.2.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^15.5.0",
+    "prettier": "^3.6.1",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.35.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
+  }
+}
