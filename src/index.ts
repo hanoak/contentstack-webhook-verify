@@ -3,6 +3,7 @@ import replayVerify from "./utils/replay-verify.js";
 import { CS_REGIONS, CS_REGIONS_URLS } from "./constants/index.js";
 import { WebhookRequestBody } from "./types/index.js";
 import makeRequest from "./utils/request.js";
+import verifySignature from "./utils/signature-verify.js";
 
 const verify = async (
   headerSignature: string,
@@ -15,7 +16,10 @@ const verify = async (
   const csPublicKey = (await makeRequest(CS_REGIONS_URLS[region]))[
     "signing-key"
   ];
-  console.info(csPublicKey);
+
+  verifySignature(headerSignature, csPublicKey, reqBody);
+
+  console.info("Signature verified successfully.");
   return true;
 };
 
