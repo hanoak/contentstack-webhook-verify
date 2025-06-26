@@ -3,11 +3,23 @@ import * as https from "https";
 import { IncomingMessage } from "http";
 import { ApiResponse } from "../types/index.js";
 import WebhookError from "./error.js";
+import { WEBHOOK_TIMEOUT } from "../constants/index.js";
 
 const makeRequest = (url: string): Promise<ApiResponse> => {
+  const controller = new AbortController();
+  const { signal } = controller;
+
+  // Set a timeout to abort the request
+  const timeoutId = setTimeout(() => {
+    controller.abort(
+      new WebhookError(`Request timed out after ${WEBHOOK_TIMEOUT}ms`),
+    );
+  }, WEBHOOK_TIMEOUT);
+
   return new Promise((resolve, reject) => {
     https
-      .get(url, (res: IncomingMessage) => {
+      .get(url, { signal }, (res: IncomingMessage) => {
+        clearTimeout(timeoutId);
         let data = "";
 
         if (
@@ -37,6 +49,7 @@ const makeRequest = (url: string): Promise<ApiResponse> => {
         });
       })
       .on("error", (err: Error) => {
+        clearTimeout(timeoutId);
         reject(new WebhookError(`Network error for ${url}: ${err.message}`));
       });
   });

@@ -19,3 +19,5 @@ export const CS_REGIONS_URLS = {
 };
 
 export const WEBHOOK_THRESHOLD_MINS = 5 * 60; // 5 minutes in seconds
+
+export const WEBHOOK_TIMEOUT = 30 * 1000; // 30 seconds in milliseconds
