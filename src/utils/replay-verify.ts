@@ -1,7 +1,9 @@
-import { WEBHOOK_THRESHOLD_MINS } from "../constants/index.js";
 import WebhookError from "./error.js";
+import { Config } from "../types/index.js";
 
-const replayVerify = (triggeredAt: string) => {
+const replayVerify = (triggeredAt: string, options: Config) => {
+  if (!options.replayVerify) return;
+
   if (!triggeredAt || typeof triggeredAt !== "string") {
     throw new WebhookError(
       "Invalid Payload: 'triggered_at' is required and must be a string",
@@ -12,12 +14,10 @@ const replayVerify = (triggeredAt: string) => {
     throw new WebhookError("Invalid 'triggered_at' format");
   }
 
-  const triggeredAtTimestamp = Math.floor(
-    new Date(triggeredAt).getTime() / 1000,
-  );
-  const nowTimestamp = Math.floor(new Date().getTime() / 1000);
+  const triggeredAtTimestamp = new Date(triggeredAt).getTime();
+  const nowTimestamp = new Date().getTime();
 
-  if (nowTimestamp - triggeredAtTimestamp > WEBHOOK_THRESHOLD_MINS) {
+  if (nowTimestamp - triggeredAtTimestamp > options.replayThreshold) {
     throw new WebhookError("Expired signature: The webhook is too old");
   }
 };

@@ -3,18 +3,23 @@ import * as https from "https";
 import { IncomingMessage } from "http";
 import { ApiResponse } from "../types/index.js";
 import WebhookError from "./error.js";
-import { WEBHOOK_TIMEOUT } from "../constants/index.js";
+import { CS_REGIONS_URLS } from "../constants/index.js";
+import { Config } from "../types/index.js";
+import { RegionKey } from "../types/index.js";
 
-const makeRequest = (url: string): Promise<ApiResponse> => {
+const makeRequest = (options: Config): Promise<ApiResponse> => {
+  const url =
+    options.customRegionUrl ?? CS_REGIONS_URLS[options.region as RegionKey];
+
   const controller = new AbortController();
   const { signal } = controller;
 
   // Set a timeout to abort the request
   const timeoutId = setTimeout(() => {
     controller.abort(
-      new WebhookError(`Request timed out after ${WEBHOOK_TIMEOUT}ms`),
+      new WebhookError(`Request timed out after ${options.requestTimeout}ms`),
     );
-  }, WEBHOOK_TIMEOUT);
+  }, options.requestTimeout);
 
   return new Promise((resolve, reject) => {
     https
