@@ -1,5 +1,6 @@
 import { WebhookRequestBody } from "../types/index.js";
 import crypto from "crypto";
+import WebhookError from "./error.js";
 
 const verifySignature = (
   headerSignature: string,
@@ -24,7 +25,7 @@ const verifySignature = (
       Buffer.from(signature, "base64"),
     )
   ) {
-    throw new Error("Signature verification failed.");
+    throw new WebhookError("Signature verification failed.");
   }
 };
 

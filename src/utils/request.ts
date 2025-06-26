@@ -2,6 +2,7 @@
 import * as https from "https";
 import { IncomingMessage } from "http";
 import { ApiResponse } from "../types/index.js";
+import WebhookError from "./error.js";
 
 const makeRequest = (url: string): Promise<ApiResponse> => {
   return new Promise((resolve, reject) => {
@@ -15,7 +16,9 @@ const makeRequest = (url: string): Promise<ApiResponse> => {
           res.statusCode >= 300
         ) {
           return reject(
-            new Error(`HTTP error! Status: ${res.statusCode || "Unknown"}`),
+            new WebhookError(
+              `HTTP error! Status: ${res.statusCode || "Unknown"}`,
+            ),
           );
         }
 
@@ -27,12 +30,14 @@ const makeRequest = (url: string): Promise<ApiResponse> => {
           try {
             resolve(JSON.parse(data));
           } catch (e: any) {
-            reject(new Error(`Error parsing JSON from ${url}: ${e.message}`));
+            reject(
+              new WebhookError(`Error parsing JSON from ${url}: ${e.message}`),
+            );
           }
         });
       })
       .on("error", (err: Error) => {
-        reject(new Error(`Network error for ${url}: ${err.message}`));
+        reject(new WebhookError(`Network error for ${url}: ${err.message}`));
       });
   });
 };
