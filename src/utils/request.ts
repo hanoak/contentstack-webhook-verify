@@ -7,6 +7,19 @@ import { CS_REGIONS_URLS } from "../constants/index.js";
 import { Config } from "../types/index.js";
 import { RegionKey } from "../types/index.js";
 
+/**
+ * Makes an HTTPS GET request to the specified URL or region endpoint with a configurable timeout.
+ *
+ * @param options - The configuration object containing request parameters such as region, custom URL, and timeout.
+ * @returns A promise that resolves with the parsed JSON response as `ApiResponse`, or rejects with a `WebhookError` on failure.
+ *
+ * @throws {WebhookError} If the request times out, encounters a network error, receives a non-2xx status code, or fails to parse the response as JSON.
+ *
+ * @remarks
+ * - Aborts the request if it exceeds the specified `requestTimeout`.
+ * - Uses the `AbortController` API to handle request cancellation.
+ * - Supports custom region URLs or falls back to predefined region endpoints.
+ */
 const makeRequest = (options: Config): Promise<ApiResponse> => {
   const url =
     options.customRegionUrl ?? CS_REGIONS_URLS[options.region as RegionKey];

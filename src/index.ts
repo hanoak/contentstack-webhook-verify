@@ -7,6 +7,17 @@ import WebhookError from "./utils/error.js";
 import { Config, ConfigOptions } from "./types/index.js";
 import defaultConfig from "./config/index.js";
 
+/**
+ * Verifies the authenticity of a webhook request by validating the signature,
+ * checking for replay attacks, and ensuring the request body is valid.
+ *
+ * @param headerSignature - The signature provided in the webhook request header.
+ * @param reqBody - The body of the webhook request to be verified.
+ * @param options - Optional configuration options to override default verification behavior.
+ * @returns A promise that resolves to `true` if verification succeeds, or throws a `WebhookError` if verification fails.
+ *
+ * @throws {WebhookError} If the request is invalid, the signature is incorrect, or a replay attack is detected.
+ */
 const verify = async (
   headerSignature: string,
   reqBody: WebhookRequestBody,

@@ -3,6 +3,14 @@ import { WebhookRequestBody } from "../types/index.js";
 import WebhookError from "./error.js";
 import { ConfigOptions } from "../types/index.js";
 
+/**
+ * Validates the parameters required for verifying a webhook request.
+ *
+ * @param headerSignature - The signature from the request header to be validated.
+ * @param reqBody - The body of the webhook request.
+ * @param options - Configuration options for validation, including replay protection, region, and timeouts.
+ * @throws {WebhookError} Throws if any of the parameters are invalid or missing required properties.
+ */
 const reqValidate = (
   headerSignature: string,
   reqBody: WebhookRequestBody,
