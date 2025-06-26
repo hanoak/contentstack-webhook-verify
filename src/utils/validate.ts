@@ -1,8 +1,9 @@
 import { CS_REGIONS } from "../constants/index.js";
+import { WebhookRequestBody } from "../types/index.js";
 
 const reqValidate = (
   headerSignature: string,
-  reqBody: object,
+  reqBody: WebhookRequestBody,
   region: string,
 ) => {
   if (!headerSignature || typeof headerSignature !== "string") {
@@ -13,7 +14,7 @@ const reqValidate = (
     throw new Error("Invalid request body");
   }
 
-  if (!region || !CS_REGIONS.includes(region)) {
+  if (!region || typeof region !== "string" || !CS_REGIONS.includes(region)) {
     throw new Error("Invalid region");
   }
 };

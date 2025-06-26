@@ -17,3 +17,5 @@ export const CS_REGIONS_URLS = {
   "GCP-NA": "https://gcp-na-app.contentstack.com/.well-known/public-keys.json",
   "GCP-EU": "https://gcp-eu-app.contentstack.com/.well-known/public-keys.json",
 };
+
+export const WEBHOOK_THRESHOLD_MINS = 5 * 60; // 5 minutes in seconds
