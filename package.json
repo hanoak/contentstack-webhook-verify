@@ -1,16 +1,22 @@
 {
   "name": "contentstack-webhook-verify",
   "version": "1.0.0",
-  "description": "contentstack-webhook-verify",
+  "description": "A secure Node.js library for verifying Contentstack webhook authenticity with signature verification and replay attack prevention",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf dist",
+    "rebuild": "npm run clean && npm run build",
     "prepare": "npm run build",
-    "lint:fix": "eslint --fix ./*.js",
+    "prepublishOnly": "npm run rebuild && npm run lint:check",
+    "lint:check": "eslint src/**/*.ts",
+    "lint:fix": "eslint --fix src/**/*.ts",
     "precommit": "lint-staged --concurrent false",
-    "prettify": "prettier --write ."
+    "prettify": "prettier --write .",
+    "check-types": "tsc --noEmit",
+    "test": "echo \"Tests not implemented yet\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -30,12 +36,7 @@
   "files": [
     "dist"
   ],
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/MIT"
-    }
-  ],
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/hanoak/contentstack-webhook-verify/issues"
   },

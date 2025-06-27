@@ -1,0 +1,31 @@
+# Source files - only publish built files
+src/
+tsconfig.json
+eslint.config.js
+.lintstagedrc.json
+
+# Development files
+.git/
+.github/
+.vscode/
+.idea/
+.DS_Store
+.env
+*.log
+coverage/
+.nyc_output/
+
+# Documentation and config files
+CONTRIBUTING.md
+.gitignore
+.prettierrc
+.eslintrc*
+
+# Dependencies
+node_modules/
+
+# Keep these files for npm package
+# LICENSE
+# README.md
+# package.json
+# dist/

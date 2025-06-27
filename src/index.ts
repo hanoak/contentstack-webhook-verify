@@ -48,3 +48,12 @@ const verify = async (
 };
 
 export default verify;
+
+// Export types for TypeScript users
+export type {
+  WebhookRequestBody,
+  Config,
+  ConfigOptions,
+  RegionKey,
+} from "./types/index.js";
+export { default as WebhookError } from "./utils/error.js";
