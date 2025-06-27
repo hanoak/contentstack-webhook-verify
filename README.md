@@ -114,7 +114,7 @@ app.use(express.json());
 app.post("/webhook", async (req, res) => {
   try {
     // Get signature from header
-    const signature = req.headers["X-Contentstack-Request-Signature"];
+    const signature = req.headers["x-contentstack-request-signature"];
 
     // Verify the webhook
     const isValid = await verify(signature, req.body);
@@ -139,7 +139,7 @@ import verify from "contentstack-webhook-verify";
 
 export async function POST(request) {
   try {
-    const signature = request.headers.get("X-Contentstack-Request-Signature");
+    const signature = request.headers.get("x-contentstack-request-signature");
     const body = await request.json();
 
     await verify(signature, body);
@@ -181,7 +181,7 @@ const config: ConfigOptions = {
 
 app.post("/webhook", async (req: Request, res: Response) => {
   try {
-    const signature = req.headers["X-Contentstack-Request-Signature"] as string;
+    const signature = req.headers["x-contentstack-request-signature"] as string;
     const body = req.body as ContentstackWebhookBody;
 
     await verify(signature, body, config);
@@ -212,7 +212,7 @@ const customOptions = {
 
 app.post("/webhook", async (req, res) => {
   try {
-    const signature = req.headers["X-Contentstack-Request-Signature"];
+    const signature = req.headers["x-contentstack-request-signature"];
     await verify(signature, req.body, customOptions);
 
     // Handle successful verification
@@ -321,7 +321,7 @@ Verifies the authenticity of a Contentstack webhook request.
 
 | Parameter         | Type                 | Required | Description                                             |
 | ----------------- | -------------------- | -------- | ------------------------------------------------------- |
-| `headerSignature` | `string`             | ✅       | Signature from `x-Contentstack-Request-Signature`header |
+| `headerSignature` | `string`             | ✅       | Signature from `x-contentstack-request-signature`header |
 | `reqBody`         | `WebhookRequestBody` | ✅       | The webhook request body                                |
 | `options`         | `ConfigOptions`      | ❌       | Configuration options (optional)                        |
 
@@ -383,7 +383,7 @@ interface Config {
 | `replayThreshold` | `number`  | `300000`    | Time window in milliseconds for acceptable request age (default: 5 minutes) |
 | `requestTimeout`  | `number`  | `30000`     | HTTP request timeout in milliseconds (default: 30 seconds)                  |
 | `region`          | `string`  | `NA`        | Contentstack region identifier                                              |
-| `customRegionUrl` | `string   | `undefined` | Custom URL for fetching public keys                                         |
+| `customRegionUrl` | `string`  | `undefined` | Custom URL for fetching public keys                                         |
 
 #### `RegionKey`
 
@@ -447,7 +447,7 @@ The function will throw `WebhookError` in these cases:
 
 **❌ "Invalid signature" errors:**
 
-- Verify you're using the correct header name (`X-Contentstack-Request-Signature`)
+- Verify you're using the correct header name. Contentstack sends `X-Contentstack-Request-Signature`(pascal case). However, In Express.js & Next.js, the default behavior is `x-contentstack-request-signature`(all lower-cased). So, depending upon your implementation, make sure the name of this header to be correct.
 - Ensure the request body hasn't been modified
 - Check if you're using the correct Contentstack region
 
