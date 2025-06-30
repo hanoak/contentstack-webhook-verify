@@ -391,7 +391,7 @@ interface Config {
 Union type of supported Contentstack regions.
 
 ```javascript
-type RegionKey = "NA" | "EU" | "AZZURE-NA" | "AZZURE-EU" | "GCP-NA" | "GCP-EU";
+type RegionKey = "NA" | "EU" | "AU" | "AZZURE-NA" | "AZZURE-EU" | "GCP-NA" | "GCP-EU";
 ```
 
 **Supported Regions:**
