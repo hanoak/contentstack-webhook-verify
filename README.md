@@ -41,7 +41,7 @@ The function is designed to be flexible with configurable options while maintain
 
 ### 5. Contentstack multi-region support
 
-- Supports all Contentstack regions: `NA` `EU` `AZZURE-NA` `AZZURE-EU` `GCP-NA` `GCP-EU`
+- Supports all Contentstack regions: `NA` `EU` `AU` `AZZURE-NA` `AZZURE-EU` `GCP-NA` `GCP-EU`
 
 ## Configuration Features
 
@@ -228,12 +228,13 @@ app.post("/webhook", async (req, res) => {
 ```javascript
 // For different Contentstack regions
 const customOptions = {
-  region: "NA", // Use NA region
-  // region: 'EU',                 // Use EU region
-  // region: 'AZZURE-NA',                 // Use AZZURE-NA region
-  // region: 'AZZURE-EU',                 // Use AZZURE-EU region
-  // region: 'GCP-NA',                 // Use GCP-NA region
-  // region: 'GCP-EU',                 // Use GCP-EU region
+  region: "NA", // Use AWS North America region
+  // region: 'EU',                 // Use AWS Europe region
+  // region: 'AU',                 // Use AWS Australia region
+  // region: 'AZZURE-NA',          // Use AZZURE-NA region
+  // region: 'AZZURE-EU',          // Use AZZURE-EU region
+  // region: 'GCP-NA',             // Use GCP-NA region
+  // region: 'GCP-EU',             // Use GCP-EU region
 };
 
 // Use specific region
@@ -399,6 +400,7 @@ type RegionKey = "NA" | "EU" | "AZZURE-NA" | "AZZURE-EU" | "GCP-NA" | "GCP-EU";
 | ----------- | -------------------------- |
 | `NA`        | AWS North America          |
 | `EU`        | AWS Europe                 |
+| `AU`        | AWS Australia              |
 | `AZZURE-NA` | Azure North America        |
 | `AZZURE-EU` | Azure Europe               |
 | `GCP-NA`    | Google Cloud North America |
